@@ -1,9 +1,9 @@
 use v6.c;
 
-role ValueType:ver<0.0.1>:auth<cpan:ELIZABETH> {
+role ValueType:ver<0.0.2>:auth<cpan:ELIZABETH> {
     has $!WHICH;
 
-    method WHICH(--> ValueObjAt:D) {
+    multi method WHICH(::?CLASS:D: --> ValueObjAt:D) {
         $!WHICH.defined
           ?? $!WHICH
           !! self!WHICH

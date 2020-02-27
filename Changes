@@ -2,5 +2,8 @@ Revision history for ValueType
 
 {{$NEXT}}
 
+0.0.2  2020-02-27T13:31:00+01:00
+    - make sure the WHICH method is a multi taking instances only
+
 0.0.1  2020-02-26T22:18:32+01:00
     - Initial version
