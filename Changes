@@ -2,6 +2,11 @@ Revision history for ValueType
 
 {{$NEXT}}
 
+0.0.3  2021-01-31T11:24:01+01:00
+    - Create list of checkable attributes when running mainline
+    - Added THEORY OF OPERATION section in documentation
+    - Updated copyright year
+
 0.0.2  2020-02-27T13:31:00+01:00
     - make sure the WHICH method is a multi taking instances only
 

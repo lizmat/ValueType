@@ -1,22 +1,26 @@
 {
-  "auth" : "cpan:ELIZABETH",
-  "authors" : [
+  "auth": "cpan:ELIZABETH",
+  "authors": [
     "Elizabeth Mattijsen"
   ],
-  "build-depends" : [ ],
-  "depends" : [ ],
-  "description" : "A role to create Value Type classes",
-  "license" : "Artistic-2.0",
-  "name" : "ValueType",
-  "perl" : "6.c",
-  "provides" : {
-    "ValueType" : "lib/ValueType.pm6"
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "A role to create Value Type classes",
+  "license": "Artistic-2.0",
+  "name": "ValueType",
+  "perl": "6.d",
+  "provides": {
+    "ValueType": "lib/ValueType.pm6"
   },
-  "resources" : [ ],
-  "source-url" : "https://github.com/lizmat/ValueType.git",
-  "tags" : [
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/ValueType.git",
+  "tags": [
     "UTILS"
   ],
-  "test-depends" : [ ],
-  "version" : "0.0.2"
+  "test-depends": [
+  ],
+  "version": "0.0.3"
 }

@@ -30,6 +30,11 @@ This is specifically important when using set operators (such as `(elem)`, or `S
 
 The format of the value that is being returned by `WHICH` is only valid during a run of a process. So it should **not** be stored in any permanent medium.
 
+THEORY OF OPERATION
+===================
+
+The first time the `WHICH` method (mixed in by this role) is called, it will check all of its attribute values for being a value type. If they all are, then it will construct a `ValueObjAt` object for its `WHICH` value, save it for future reference, and return it. If any of the attribute values are **not** a value type, then an exception will be thrown.
+
 AUTHOR
 ======
 
@@ -40,7 +45,7 @@ Source can be located at: https://github.com/lizmat/ValueType . Comments and Pul
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright 2020 Elizabeth Mattijsen
+Copyright 2020,2021 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 

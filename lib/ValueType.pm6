@@ -1,7 +1,9 @@
-use v6.c;
+use v6.d;
 
-role ValueType:ver<0.0.2>:auth<cpan:ELIZABETH> {
+role ValueType:ver<0.0.3>:auth<cpan:ELIZABETH> {
     has $!WHICH;
+
+    my @attributes = ::?CLASS.^attributes.grep: *.name ne 'WHICH';
 
     multi method WHICH(::?CLASS:D: --> ValueObjAt:D) {
         $!WHICH.defined
@@ -10,16 +12,12 @@ role ValueType:ver<0.0.2>:auth<cpan:ELIZABETH> {
     }
 
     method !WHICH() {
-        my @rest = self.^name;
-        for self.^attributes -> $attribute {
-            my $name := $attribute.name;
-            unless $name eq '$!WHICH' {
-                my $WHICH := $attribute.get_value(self).WHICH;
-
-                $WHICH ~~ ValueObjAt
-                  ?? @rest.push($WHICH)
-                  !! die "Attribute '$name' is not a Value Type";
-            }
+        my str @rest = self.^name;
+        for @attributes -> $attribute {
+            my $WHICH := $attribute.get_value(self).WHICH;
+            $WHICH ~~ ValueObjAt
+              ?? @rest.push($WHICH.Str)
+              !! die "Attribute '$attribute.name()' is not a Value Type";
         }
         $!WHICH := ValueObjAt.new(@rest.join('|'))
     }
@@ -64,6 +62,14 @@ The format of the value that is being returned by C<WHICH> is only valid
 during a run of a process.  So it should B<not> be stored in any permanent
 medium.
 
+=head1 THEORY OF OPERATION
+
+The first time the C<WHICH> method (mixed in by this role) is called, it
+will check all of its attribute values for being a value type.  If they
+all are, then it will construct a C<ValueObjAt> object for its C<WHICH>
+value, save it for future reference, and return it.  If any of the attribute
+values are B<not> a value type, then an exception will be thrown.
+
 =head1 AUTHOR
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
@@ -73,11 +79,11 @@ Pull Requests are welcome.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2020 Elizabeth Mattijsen
+Copyright 2020,2021 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under
 the Artistic License 2.0.
 
 =end pod
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4
