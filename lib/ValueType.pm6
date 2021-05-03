@@ -1,9 +1,15 @@
 use v6.d;
 
-role ValueType:ver<0.0.3>:auth<cpan:ELIZABETH> {
-    has $!WHICH;
+# no need for :ver or :auth as it is hidden to the outside world
+my role ValueType::Excluded {}
+multi trait_mod:<is> (Attribute \attr, :$excluded-from-valuetype!) is export {
+    attr does ValueType::Excluded
+}
 
-    my @attributes = ::?CLASS.^attributes.grep: *.name ne 'WHICH';
+role ValueType:ver<0.0.3>:auth<cpan:ELIZABETH> {
+    has $!WHICH is excluded-from-valuetype;
+
+    my @attributes = ::?CLASS.^attributes.grep: { $_ !~~ ValueType::Excluded };
 
     multi method WHICH(::?CLASS:D: --> ValueObjAt:D) {
         $!WHICH.defined
