@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/lizmat/ValueType/workflows/test/badge.svg)](https://github.com/lizmat/ValueType/actions)
+
 NAME
 ====
 
@@ -38,14 +40,14 @@ The first time the `WHICH` method (mixed in by this role) is called, it will che
 AUTHOR
 ======
 
-Elizabeth Mattijsen <liz@wenzperl.nl>
+Elizabeth Mattijsen <liz@raku.rocks>
 
 Source can be located at: https://github.com/lizmat/ValueType . Comments and Pull Requests are welcome.
 
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright 2020,2021 Elizabeth Mattijsen
+Copyright 2020, 2021 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
