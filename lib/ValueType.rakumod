@@ -1,9 +1,14 @@
 use v6.d;
 
-role ValueType:ver<0.0.4>:auth<zef:lizmat> {
+role ValueType {
     has $!WHICH;
 
     my @attributes = ::?CLASS.^attributes.grep: *.name ne 'WHICH';
+
+    if @attributes.grep(*.rw) -> @mutables {
+        die "These attributes are mutable: "
+          ~ @mutables.map(*.name).join(', ');
+    }
 
     multi method WHICH(::?CLASS:D: --> ValueObjAt:D) {
         $!WHICH.defined
@@ -31,24 +36,29 @@ ValueType - A role to create Value Type classes
 
 =head1 SYNOPSIS
 
-  use ValueType;
+=begin code :lang<raku>
 
-  class Point does ValueType {
-      has $.x = 0;
-      has $.y = 0;
-  }
+use ValueType;
 
-  say Point.new.WHICH;  # Point|Int|0|Int|0
+class Point does ValueType {
+    has $.x = 0;
+    has $.y = 0;
+}
 
-  # fill a bag with random Points
-  my $bag = bag (^1000).map: {
-    Point.new: x => (-10..10).roll, y => (-10..10).roll
-  }
-  say $bag.elems;  # less than 1000
+say Point.new.WHICH;  # Point|Int|0|Int|0
+
+# fill a bag with random Points
+my $bag = bag (^1000).map: {
+  Point.new: x => (-10..10).roll, y => (-10..10).roll
+}
+say $bag.elems;  # less than 1000
+
+=end code
 
 =head1 DESCRIPTION
 
-The ValueType role mixes the logic of creating a proper ValueType into a
+The C<ValueType> role mixes the logic of creating a proper
+L<value type|https://docs.raku.org/language/glossary#Value_type> into a
 class.  A class is considered to be a value type if the C<.WHICH> method
 returns an object of the C<ValueObjAt> class: that then indicates that
 objects that return the same C<WHICH> value, are in fact identical and
@@ -64,8 +74,11 @@ medium.
 
 =head1 THEORY OF OPERATION
 
-The first time the C<WHICH> method (mixed in by this role) is called, it
-will check all of its attribute values for being a value type.  If they
+At role composition time, each attribute will be checked for mutability.
+If any mutable attributes are found, then a compilation error will occur.
+
+Then, the first time the C<WHICH> method (mixed in by this role) is called,
+it will check all of its attribute values for being a value type.  If they
 all are, then it will construct a C<ValueObjAt> object for its C<WHICH>
 value, save it for future reference, and return it.  If any of the attribute
 values are B<not> a value type, then an exception will be thrown.
@@ -77,9 +90,13 @@ Elizabeth Mattijsen <liz@raku.rocks>
 Source can be located at: https://github.com/lizmat/ValueType . Comments and
 Pull Requests are welcome.
 
+If you like this module, or what I’m doing more generally, committing to a
+L<small sponsorship|https://github.com/sponsors/lizmat/>  would mean a great
+deal to me!
+
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2020, 2021 Elizabeth Mattijsen
+Copyright 2020, 2021, 2024 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under
 the Artistic License 2.0.

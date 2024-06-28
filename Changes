@@ -2,6 +2,14 @@ Revision history for ValueType
 
 {{$NEXT}}
 
+0.0.5  2024-06-28T21:03:08+02:00
+    - Make sure attributes are immutable, error out if not
+    - Modernize test file extension
+    - Modernize pod
+    - Add sponsor link and button
+    - Add test button for each OS
+    - Update copyright year
+
 0.0.4  2021-09-10T11:47:07+02:00
     - Change file extension to .rakumod
     - Migrate to zef ecosystem
