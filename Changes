@@ -2,6 +2,10 @@ Revision history for ValueType
 
 {{$NEXT}}
 
+0.0.6  2024-06-28T22:03:38+02:00
+    - Added support for "is hidden-from-ValueType" attribute trait,
+      suggested by Brad Gilbert
+
 0.0.5  2024-06-28T21:03:08+02:00
     - Make sure attributes are immutable, error out if not
     - Modernize test file extension

@@ -14,9 +14,16 @@ use ValueType;
 class Point does ValueType {
     has $.x = 0;
     has $.y = 0;
+    has $.distance is hidden-from-ValueType is built(False);
+
+    method TWEAK() {
+        $!distance = sqrt $!x² + $!y²;
+    }
 }
 
-say Point.new.WHICH;  # Point|Int|0|Int|0
+say Point.new.WHICH;                     # Point|Int|0|Int|0
+
+say Point.new(x => 3, y => 4).distance;  # 5
 
 # fill a bag with random Points
 my $bag = bag (^1000).map: {
@@ -33,6 +40,11 @@ The `ValueType` role mixes the logic of creating a proper [value type](https://d
 This is specifically important when using set operators (such as `(elem)`, or `Set`s, `Bag`s or `Mix`es, or any other functionality that is based on the `===` operator functionality, such as `unique` and `squish`.
 
 The format of the value that is being returned by `WHICH` is only valid during a run of a process. So it should **not** be stored in any permanent medium.
+
+EXCLUDING ATTRIBUTES
+====================
+
+Sometimes a class has an extra attribute that depends on the other attributes, but which cannot be set, and doesn't need to be included in the calculation of the `WHICH` value. Such attributes can be marked with the `is hidden-from-ValueType` attribute.
 
 THEORY OF OPERATION
 ===================

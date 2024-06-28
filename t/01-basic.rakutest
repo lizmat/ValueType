@@ -7,6 +7,7 @@ plan 3;
 class Point does ValueType {
     has $.x = 0;
     has $.y = 0;
+    has $!distance is hidden-from-ValueType;
 }
 
 is-deeply Point.new.WHICH, ValueObjAt.new("Point|Int|0|Int|0"),

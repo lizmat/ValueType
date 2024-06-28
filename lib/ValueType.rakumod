@@ -1,9 +1,16 @@
 use v6.d;
 
+my role Excluded {}
+multi trait_mod:<is>(Attribute:D $attr, :$hidden-from-ValueType!) is export {
+    $attr does Excluded
+}
+
 role ValueType {
     has $!WHICH;
 
-    my @attributes = ::?CLASS.^attributes.grep: *.name ne 'WHICH';
+    my @attributes = ::?CLASS.^attributes.map: {
+        $_ unless .name eq 'WHICH' || $_ ~~ Excluded
+    }
 
     if @attributes.grep(*.rw) -> @mutables {
         die "These attributes are mutable: "
@@ -43,9 +50,16 @@ use ValueType;
 class Point does ValueType {
     has $.x = 0;
     has $.y = 0;
+    has $.distance is hidden-from-ValueType is built(False);
+
+    method TWEAK() {
+        $!distance = sqrt $!x² + $!y²;
+    }
 }
 
-say Point.new.WHICH;  # Point|Int|0|Int|0
+say Point.new.WHICH;                     # Point|Int|0|Int|0
+
+say Point.new(x => 3, y => 4).distance;  # 5
 
 # fill a bag with random Points
 my $bag = bag (^1000).map: {
@@ -71,6 +85,13 @@ on the C<===> operator functionality, such as C<unique> and C<squish>.
 The format of the value that is being returned by C<WHICH> is only valid
 during a run of a process.  So it should B<not> be stored in any permanent
 medium.
+
+=head1 EXCLUDING ATTRIBUTES
+
+Sometimes a class has an extra attribute that depends on the other
+attributes, but which cannot be set, and doesn't need to be included
+in the calculation of the C<WHICH> value.  Such attributes can be marked
+with the C<is hidden-from-ValueType> attribute.
 
 =head1 THEORY OF OPERATION
 
