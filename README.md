@@ -35,7 +35,7 @@ say $bag.elems;  # less than 1000
 DESCRIPTION
 ===========
 
-The `ValueType` role mixes the logic of creating a proper [value type](https://docs.raku.org/language/glossary#Value_type) into a class. A class is considered to be a value type if the `.WHICH` method returns an object of the `ValueObjAt` class: that then indicates that objects that return the same `WHICH` value, are in fact identical and can be used interchangeably.
+The `ValueType` distribution provides a `ValueType` role that mixes the logic of creating a proper [value type](https://docs.raku.org/language/glossary#Value_type) into a single class. A class is considered to be a value type if the `.WHICH` method returns an object of the `ValueObjAt` class: that then indicates that objects that return the same `WHICH` value, are in fact identical and can be used interchangeably.
 
 This is specifically important when using set operators (such as `(elem)`, or `Set`s, `Bag`s or `Mix`es, or any other functionality that is based on the `===` operator functionality, such as `unique` and `squish`.
 
@@ -65,7 +65,7 @@ If you like this module, or what I’m doing more generally, committing to a [sm
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright 2020, 2021, 2024 Elizabeth Mattijsen
+Copyright 2020, 2021, 2024, 2025 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 

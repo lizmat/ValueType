@@ -1,4 +1,3 @@
-use v6.*;
 use Test;
 use ValueType;
 
@@ -19,7 +18,7 @@ my $bag = bag (^1000).map: {
 
 ok $bag.elems < 1000, 'should be fewer than 1000 different points';
 
-eval-dies-ok 'class A does ValueType { has $.a is rw }',
+dies-ok { 'class A does ValueType { has $.a is rw }'.EVAL },
   'cannot have "is rw" attributes in value types';
 
 # vim: expandtab shiftwidth=4
